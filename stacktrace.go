@@ -88,9 +88,9 @@ func shouldIgnoreStacktraceFunction(function string) bool {
 		if strings.HasPrefix(function, prefix) {
 			return true
 		}
-		//if _stacktraceIgnoreRE.MatchString(function) {
-		//	return true
-		//}
+		if _stacktraceIgnoreRE.MatchString(function) {
+			return true
+		}
 	}
 	return false
 }
