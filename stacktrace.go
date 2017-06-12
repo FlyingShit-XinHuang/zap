@@ -26,11 +26,11 @@ import (
 	"sync"
 
 	"go.uber.org/zap/internal/bufferpool"
+	"regexp"
 )
 
 var (
 	_stacktraceIgnorePrefixes = []string{
-		"go.uber.org/zap",
 		"runtime.goexit",
 		"runtime.main",
 	}
@@ -39,6 +39,8 @@ var (
 			return newProgramCounters(64)
 		},
 	}
+
+	_stacktraceIgnoreRE = regexp.MustCompile("go\\.uber\\.org/zap\\.")
 )
 
 func takeStacktrace() string {
@@ -86,6 +88,9 @@ func shouldIgnoreStacktraceFunction(function string) bool {
 		if strings.HasPrefix(function, prefix) {
 			return true
 		}
+		//if _stacktraceIgnoreRE.MatchString(function) {
+		//	return true
+		//}
 	}
 	return false
 }
